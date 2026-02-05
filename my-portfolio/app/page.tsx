@@ -1,3 +1,6 @@
+"use client"
+import { motion } from "framer-motion";
+
 const skills = ["HTML", "CSS", "JavaScript", "Next.js", "Tailwind", "Git"];
 
 const projects = [
@@ -23,7 +26,11 @@ export default function Home() {
     <main className="min-h-screen bg-zinc-950 text-zinc-100">
       <div className="mx-auto max-w-5xl px-6 py-16">
         {/* HERO */}
-        <header>
+        <motion.header
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <p className="text-sm text-zinc-400">Portfolio</p>
 
           <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
@@ -50,7 +57,7 @@ export default function Home() {
               Contact Me
             </a>
           </div>
-        </header>
+        </motion.header>
 
         {/* ABOUT */}
         <section className="mt-16 border-t border-zinc-800 pt-12" id="about">
