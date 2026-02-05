@@ -91,8 +91,18 @@ export default function Home() {
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {projects.map((p) => (
-              <article
+              <motion.article
                 key={p.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{
+                  y: -6,
+                  backgroundColor: "rgba(24, 24, 27, 0.9)",
+                  borderColor: "rgba(255, 255, 255, 0.15)",
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+                }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                viewport={{ once: true }}
                 className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5"
               >
                 <h3 className="text-lg font-semibold">{p.title}</h3>
@@ -100,11 +110,11 @@ export default function Home() {
 
                 <a
                   href={p.link}
-                  className="mt-4 inline-block text-sm font-semibold text-white underline underline-offset-4 hover:opacity-90"
+                  className="mt-4 inline-block text-sm font-semibold text-white underline underline-offset-4"
                 >
                   View →
                 </a>
-              </article>
+              </motion.article>
             ))}
           </div>
         </section>
