@@ -41,16 +41,6 @@ function AnimatedSection({ id, className = "", children }) {
   // A little vertical movement for polish
   const y = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [24, 0, 0, -24]);
 
-useEffect(() => {
-  if (window.location.hash) {
-    history.replaceState(null, "", window.location.pathname);
-  }
-
-  // Force scroll to top on initial load
-  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-}, []);
-
-
   return (
     <motion.section
       ref={ref}
@@ -64,6 +54,14 @@ useEffect(() => {
 }
 
 export default function Home() {
+  useEffect(() => {
+    if (window.location.hash) {
+      history.replaceState(null, "", window.location.pathname);
+    }
+
+    // Force scroll to top on initial load
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, []);
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100">
       <div className="mx-auto max-w-5xl px-6 py-16">
