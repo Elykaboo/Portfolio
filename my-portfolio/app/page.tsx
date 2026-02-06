@@ -58,11 +58,12 @@ export default function Home() {
     <main className="min-h-screen bg-zinc-950 text-zinc-100">
       <div className="mx-auto max-w-5xl px-6 py-16">
         {/* HERO */}
-        <AnimatedSection id="top" className="">
+        <AnimatedSection id="top" className="min-h-screen flex items-center">
           <motion.header
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
+            className="w-full"
           >
             <p className="text-sm text-zinc-400">Portfolio</p>
 
@@ -76,19 +77,27 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#projects"
+              <button
+                onClick={() =>
+                  document.getElementById("projects")?.scrollIntoView({
+                    behavior: "smooth",
+                  })
+                }
                 className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-zinc-900 hover:opacity-90"
               >
                 View Projects
-              </a>
+              </button>
 
-              <a
-                href="#contact"
+              <button
+                onClick={() =>
+                  document.getElementById("contact")?.scrollIntoView({
+                    behavior: "smooth",
+                  })
+                }
                 className="rounded-xl border border-zinc-700 px-5 py-3 text-sm font-semibold text-zinc-100 hover:bg-zinc-900"
               >
                 Contact Me
-              </a>
+              </button>
             </div>
           </motion.header>
         </AnimatedSection>
