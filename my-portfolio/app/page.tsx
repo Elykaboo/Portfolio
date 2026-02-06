@@ -1,13 +1,12 @@
-"use client"
-import { motion } from "framer-motion";
-import { FaGithub, FaFacebook, FaDiscord, FaInstagram } from "react-icons/fa";
+"use client";
+
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { FaGithub, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 
-
 const skills = ["HTML", "CSS", "JavaScript", "Next.js", "Tailwind", "Git"];
-
-
 const projects = [
   {
     title: "Project One",
@@ -26,57 +25,89 @@ const projects = [
   },
 ];
 
+function AnimatedSection({ id, className = "", children }) {
+  const ref = useRef(null);
+
+  // 0 -> 1 progress as the section travels through the viewport
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    // Controls WHEN fade-in starts and WHEN fade-out ends
+    offset: ["start 85%", "end 15%"],
+  });
+
+  // Opacity curve: hidden -> visible -> hidden
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
+  // A little vertical movement for polish
+  const y = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [24, 0, 0, -24]);
+
+  return (
+    <motion.section
+      ref={ref}
+      id={id}
+      style={{ opacity, y }}
+      className={className}
+    >
+      {children}
+    </motion.section>
+  );
+}
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100">
       <div className="mx-auto max-w-5xl px-6 py-16">
         {/* HERO */}
-        <motion.header
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <p className="text-sm text-zinc-400">Portfolio</p>
+        <AnimatedSection id="top" className="">
+          <motion.header
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <p className="text-sm text-zinc-400">Portfolio</p>
 
-          <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
-            Hi, I’m Kyle
-          </h1>
+            <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
+              Hi, I’m Kyle
+            </h1>
 
-          <p className="mt-6 max-w-2xl text-lg text-zinc-300">
-            I’m a beginner web developer building projects with Next.js. I like
-            clean UI, simple code, and learning by building.
-          </p>
+            <p className="mt-6 max-w-2xl text-lg text-zinc-300">
+              I’m a beginner web developer building projects with Next.js. I
+              like clean UI, simple code, and learning by building.
+            </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="#projects"
-              className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-zinc-900 hover:opacity-90"
-            >
-              View Projects
-            </a>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="#projects"
+                className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-zinc-900 hover:opacity-90"
+              >
+                View Projects
+              </a>
 
-            <a
-              href="#contact"
-              className="rounded-xl border border-zinc-700 px-5 py-3 text-sm font-semibold text-zinc-100 hover:bg-zinc-900"
-            >
-              Contact Me
-            </a>
-          </div>
-        </motion.header>
+              <a
+                href="#contact"
+                className="rounded-xl border border-zinc-700 px-5 py-3 text-sm font-semibold text-zinc-100 hover:bg-zinc-900"
+              >
+                Contact Me
+              </a>
+            </div>
+          </motion.header>
+        </AnimatedSection>
 
         {/* ABOUT */}
-        <section className="mt-16 border-t border-zinc-800 pt-12" id="about">
+        <AnimatedSection
+          id="about"
+          className="mt-16 border-t border-zinc-800 pt-12"
+        >
           <h2 className="text-2xl font-semibold">About</h2>
           <p className="mt-4 text-zinc-300">
             Write a short intro about yourself here. Mention what you’re
             learning, what you enjoy building, and what kind of roles you’re
             aiming for.
           </p>
-        </section>
+        </AnimatedSection>
 
         {/* SKILLS */}
-        <section className="mt-12" id="skills">
+        <AnimatedSection id="skills" className="mt-12">
           <h2 className="text-2xl font-semibold">Skills</h2>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -89,10 +120,10 @@ export default function Home() {
               </span>
             ))}
           </div>
-        </section>
+        </AnimatedSection>
 
         {/* PROJECTS */}
-        <section className="mt-12" id="projects">
+        <AnimatedSection id="projects" className="mt-12">
           <h2 className="text-2xl font-semibold">Projects</h2>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -123,10 +154,13 @@ export default function Home() {
               </motion.article>
             ))}
           </div>
-        </section>
+        </AnimatedSection>
 
-            {/* Socials */}
-        <footer className="mt-20 border-t border-zinc-800 pt-12">
+        {/* Socials */}
+        <AnimatedSection
+          id="contact"
+          className="mt-20 border-t border-zinc-800 pt-12"
+        >
           <div className="mx-auto max-w-5xl px-6">
             {/* CONTACT CARD */}
             <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-8 text-center">
@@ -199,7 +233,7 @@ export default function Home() {
               © {new Date().getFullYear()} Kyle. Built with Next.js.
             </p>
           </div>
-        </footer>
+        </AnimatedSection>
       </div>
     </main>
   );
