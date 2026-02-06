@@ -1,5 +1,9 @@
 "use client"
 import { motion } from "framer-motion";
+import { FaGithub, FaFacebook, FaDiscord, FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+
 
 const skills = ["HTML", "CSS", "JavaScript", "Next.js", "Tailwind", "Git"];
 
@@ -34,7 +38,7 @@ export default function Home() {
           <p className="text-sm text-zinc-400">Portfolio</p>
 
           <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
-            Hi, I’m Kyle 👋
+            Hi, I’m Kyle
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg text-zinc-300">
@@ -119,19 +123,57 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CONTACT */}
-        <section className="mt-12" id="contact">
-          <h2 className="text-2xl font-semibold">Contact</h2>
-          <p className="mt-4 text-zinc-300">
-            Want to work together or chat? Email me at{" "}
+        {/* SOCIALS */}
+        <section className="mt-12" id="socials">
+          <h2 className="text-2xl font-semibold">Socials</h2>
+
+          <p className="mt-4 text-zinc-300">You can find me here</p>
+
+          <div className="mt-6 flex items-center gap-6">
             <a
-              className="underline underline-offset-4"
-              href="mailto:you@email.com"
+              href="mailto:kyleyambaoliwanag@gmail.com"
+              aria-label="Email"
+              className="text-zinc-400 hover:text-white transition"
             >
-              you@email.com
+              <MdEmail size={26} />
             </a>
-            .
-          </p>
+
+            <a
+              href="https://github.com/elykaboo"
+              target="_blank"
+              aria-label="GitHub"
+              className="text-zinc-400 hover:text-white transition"
+            >
+              <FaGithub size={24} />
+            </a>
+
+            <a
+              href="https://facebook.com/elykaborat"
+              target="_blank"
+              aria-label="Facebook"
+              className="text-zinc-400 hover:text-white transition"
+            >
+              <FaFacebook size={24} />
+            </a>
+
+            <a
+              href="https://x.com/kyleadrn"
+              target="_blank"
+              aria-label="X"
+              className="text-zinc-400 hover:text-white transition"
+            >
+              <FaXTwitter size={24} />
+            </a>
+
+            <a
+              href="https://instagram.com/lykedrian"
+              target="_blank"
+              aria-label="Instagram"
+              className="text-zinc-400 hover:text-white transition"
+            >
+              <FaInstagram size={24} />
+            </a>
+          </div>
         </section>
 
         <footer className="mt-16 border-t border-zinc-800 pt-8 text-sm text-zinc-500">
