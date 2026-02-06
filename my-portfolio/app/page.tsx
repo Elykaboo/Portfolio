@@ -7,6 +7,7 @@ import { MdEmail } from "react-icons/md";
 
 const skills = ["HTML", "CSS", "JavaScript", "Next.js", "Tailwind", "Git"];
 
+
 const projects = [
   {
     title: "Project One",
@@ -24,6 +25,7 @@ const projects = [
     link: "#",
   },
 ];
+
 
 export default function Home() {
   return (
@@ -123,61 +125,80 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SOCIALS */}
-        <section className="mt-12" id="socials">
-          <h2 className="text-2xl font-semibold">Socials</h2>
+            {/* Socials */}
+        <footer className="mt-20 border-t border-zinc-800 pt-12">
+          <div className="mx-auto max-w-5xl px-6">
+            {/* CONTACT CARD */}
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-8 text-center">
+              <h2 className="text-2xl font-semibold text-white">Contact Me</h2>
 
-          <p className="mt-4 text-zinc-300">You can find me here</p>
+              <p className="mt-3 text-zinc-300">
+                Got a project, idea, or just want to say hi? I’m always open to
+                connecting.
+              </p>
 
-          <div className="mt-6 flex items-center gap-6">
-            <a
-              href="mailto:kyleyambaoliwanag@gmail.com"
-              aria-label="Email"
-              className="text-zinc-400 hover:text-white transition"
-            >
-              <MdEmail size={26} />
-            </a>
+              <a
+                href="mailto:you@email.com"
+                className="mt-6 inline-block rounded-xl bg-white px-6 py-3 text-sm font-semibold text-zinc-900 hover:opacity-90"
+              >
+                Email Me
+              </a>
 
-            <a
-              href="https://github.com/elykaboo"
-              target="_blank"
-              aria-label="GitHub"
-              className="text-zinc-400 hover:text-white transition"
-            >
-              <FaGithub size={24} />
-            </a>
+              {/* OPTIONAL SOCIALS */}
+              <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
+                <div className=" flex items-center gap-6">
+                  <a
+                    href="mailto:kyleyambaoliwanag@gmail.com"
+                    aria-label="Email"
+                    className="text-zinc-400 hover:text-white transition"
+                  >
+                    <MdEmail size={26} />
+                  </a>
 
-            <a
-              href="https://facebook.com/elykaborat"
-              target="_blank"
-              aria-label="Facebook"
-              className="text-zinc-400 hover:text-white transition"
-            >
-              <FaFacebook size={24} />
-            </a>
+                  <a
+                    href="https://github.com/elykaboo"
+                    target="_blank"
+                    aria-label="GitHub"
+                    className="text-zinc-400 hover:text-white transition"
+                  >
+                    <FaGithub size={24} />
+                  </a>
 
-            <a
-              href="https://x.com/kyleadrn"
-              target="_blank"
-              aria-label="X"
-              className="text-zinc-400 hover:text-white transition"
-            >
-              <FaXTwitter size={24} />
-            </a>
+                  <a
+                    href="https://facebook.com/elykaborat"
+                    target="_blank"
+                    aria-label="Facebook"
+                    className="text-zinc-400 hover:text-white transition"
+                  >
+                    <FaFacebook size={24} />
+                  </a>
 
-            <a
-              href="https://instagram.com/lykedrian"
-              target="_blank"
-              aria-label="Instagram"
-              className="text-zinc-400 hover:text-white transition"
-            >
-              <FaInstagram size={24} />
-            </a>
+                  <a
+                    href="https://x.com/kyleadrn"
+                    target="_blank"
+                    aria-label="X"
+                    className="text-zinc-400 hover:text-white transition"
+                  >
+                    <FaXTwitter size={24} />
+                  </a>
+
+                  <a
+                    href="https://instagram.com/lykedrian"
+                    target="_blank"
+                    aria-label="Instagram"
+                    className="text-zinc-400 hover:text-white transition"
+                  >
+                    <FaInstagram size={24} />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* COPYRIGHT */}
+            <p className="mt-8 text-center text-sm text-zinc-500">
+              © {new Date().getFullYear()} Kyle. Built with Next.js.
+            </p>
           </div>
-        </section>
-
-        <footer className="mt-16 border-t border-zinc-800 pt-8 text-sm text-zinc-500">
-          © {new Date().getFullYear()} Kyle. Built with Next.js.
         </footer>
       </div>
     </main>
