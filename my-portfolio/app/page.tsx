@@ -67,7 +67,7 @@ export default function Home() {
             <p className="text-sm text-zinc-400">Portfolio</p>
 
             <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
-              Hi, I’m Kyle
+              Hi, I’m Elyk !
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg text-zinc-300">
@@ -171,20 +171,65 @@ export default function Home() {
                 connecting.
               </p>
 
-              <a
-                href="mailto:you@email.com"
-                className="mt-6 inline-block rounded-xl bg-white px-6 py-3 text-sm font-semibold text-zinc-900 hover:opacity-90"
+              <form
+                className="mt-8 space-y-4 text-left"
+                onSubmit={(e) => e.preventDefault()}
               >
-                Email Me
-              </a>
+                {/* Full Name */}
+                <div>
+                  <label className="block text-sm text-zinc-400 mb-1">
+                    Your Full Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="John Doe"
+                    className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 focus:border-white focus:outline-none"
+                    required
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-sm text-zinc-400 mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="you@email.com"
+                    className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 focus:border-white focus:outline-none"
+                    required
+                  />
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label className="block text-sm text-zinc-400 mb-1">
+                    Message
+                  </label>
+                  <textarea
+                    rows={4}
+                    placeholder="Write your message here..."
+                    className="w-full resize-none rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 focus:border-white focus:outline-none"
+                    required
+                  />
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  className="w-full rounded-xl bg-white px-6 py-3 text-sm font-semibold text-zinc-900 transition hover:opacity-90"
+                >
+                  Send Message
+                </button>
+              </form>
 
               {/* OPTIONAL SOCIALS */}
-              <div className="mt-6 flex justify-center gap-4 text-sm text-zinc-400">
-                <div className=" flex items-center gap-6">
+              <div className="mt-6 flex justify-center text-zinc-400">
+                <div className="flex items-center gap-6">
                   <a
                     href="mailto:kyleyambaoliwanag@gmail.com"
                     aria-label="Email"
-                    className="text-zinc-400 hover:text-white transition"
+                    className="transition hover:text-white hover:-translate-y-1"
                   >
                     <MdEmail size={26} />
                   </a>
@@ -192,8 +237,9 @@ export default function Home() {
                   <a
                     href="https://github.com/elykaboo"
                     target="_blank"
+                    rel="noopener noreferrer"
                     aria-label="GitHub"
-                    className="text-zinc-400 hover:text-white transition"
+                    className="transition hover:text-white hover:-translate-y-1"
                   >
                     <FaGithub size={24} />
                   </a>
@@ -201,8 +247,9 @@ export default function Home() {
                   <a
                     href="https://facebook.com/elykaborat"
                     target="_blank"
+                    rel="noopener noreferrer"
                     aria-label="Facebook"
-                    className="text-zinc-400 hover:text-white transition"
+                    className="transition hover:text-white hover:-translate-y-1"
                   >
                     <FaFacebook size={24} />
                   </a>
@@ -210,8 +257,9 @@ export default function Home() {
                   <a
                     href="https://x.com/kyleadrn"
                     target="_blank"
+                    rel="noopener noreferrer"
                     aria-label="X"
-                    className="text-zinc-400 hover:text-white transition"
+                    className="transition hover:text-white hover:-translate-y-1"
                   >
                     <FaXTwitter size={24} />
                   </a>
@@ -219,8 +267,9 @@ export default function Home() {
                   <a
                     href="https://instagram.com/lykedrian"
                     target="_blank"
+                    rel="noopener noreferrer"
                     aria-label="Instagram"
-                    className="text-zinc-400 hover:text-white transition"
+                    className="transition hover:text-white hover:-translate-y-1"
                   >
                     <FaInstagram size={24} />
                   </a>
