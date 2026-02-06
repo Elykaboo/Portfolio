@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FaGithub, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -40,6 +40,16 @@ function AnimatedSection({ id, className = "", children }) {
 
   // A little vertical movement for polish
   const y = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [24, 0, 0, -24]);
+
+useEffect(() => {
+  if (window.location.hash) {
+    history.replaceState(null, "", window.location.pathname);
+  }
+
+  // Force scroll to top on initial load
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+}, []);
+
 
   return (
     <motion.section
