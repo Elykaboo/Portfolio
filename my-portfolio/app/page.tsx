@@ -1,15 +1,32 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import {
   motion,
   useScroll,
   useTransform,
   AnimatePresence,
 } from "framer-motion";
+import {
+  SiHtml5,
+  SiCss3,
+  SiJavascript,
+  SiTypescript,
+  SiReact,
+  SiNextdotjs,
+  SiBootstrap,
+  SiTailwindcss,
+  SiPython,
+  SiMongodb,
+  SiGit,
+  SiGithub,
+  SiOpenjdk, // ✅ use this instead of SiJava
+} from "react-icons/si";
+
+import { useEffect, useRef, useState } from "react";
 import { FaGithub, FaFacebook, FaInstagram, FaDownload } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
+
 
 const navItems = [
   { id: "top", label: "HOME" },
@@ -18,13 +35,25 @@ const navItems = [
   { id: "skills", label: "SKILLS" },
 ];
 
-const skillMeters = [
-  { name: "HTML/CSS", level: 75 },
-  { name: "JavaScript", level: 65 },
-  { name: "Next.js", level: 55 },
-  { name: "Tailwind", level: 70 },
-  { name: "Git", level: 60 },
+const skillsData = [
+  { name: "HTML", Icon: SiHtml5, category: "frontend" },
+  { name: "CSS", Icon: SiCss3, category: "frontend" },
+  { name: "JavaScript", Icon: SiJavascript, category: "frontend" },
+  { name: "TypeScript", Icon: SiTypescript, category: "frontend" },
+  { name: "React", Icon: SiReact, category: "frontend" },
+  { name: "Next.js", Icon: SiNextdotjs, category: "frontend" },
+  { name: "Bootstrap", Icon: SiBootstrap, category: "frontend" },
+  { name: "TailwindCSS", Icon: SiTailwindcss, category: "frontend" },
+
+  { name: "Java", Icon: SiOpenjdk, category: "backend" }, // ✅ fixed
+  { name: "Python", Icon: SiPython, category: "backend" },
+
+  { name: "MongoDB", Icon: SiMongodb, category: "database" },
+
+  { name: "Git", Icon: SiGit, category: "tools" },
+  { name: "GitHub", Icon: SiGithub, category: "tools" },
 ];
+
 
 const projects = [
   {
@@ -256,6 +285,123 @@ function AnimatedSection({ id, className = "", children, containerRef }) {
     >
       {children}
     </motion.section>
+  );
+}
+
+
+
+function SkillsSection() {
+  const [filter, setFilter] = useState("all");
+  const [query, setQuery] = useState("");
+
+  const filters = [
+    { key: "all", label: "All" },
+    { key: "frontend", label: "Frontend" },
+    { key: "backend", label: "Backend" },
+    { key: "database", label: "Database" },
+    { key: "tools", label: "Tools" },
+  ];
+
+  const filtered = skillsData.filter((s) => {
+    const matchesFilter = filter === "all" ? true : s.category === filter;
+    const matchesQuery = s.name.toLowerCase().includes(query.toLowerCase());
+    return matchesFilter && matchesQuery;
+  });
+
+  return (
+    <div className="relative w-full py-16">
+      <SectionHeader
+        kicker="TOOLKIT"
+        title="Skills"
+        subtitle="Cards with real icons — cleaner than levels. Filter by category or search."
+      />
+
+      {/* Filters */}
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap gap-2">
+          {filters.map((f) => {
+            const active = filter === f.key;
+            return (
+              <button
+                key={f.key}
+                onClick={() => setFilter(f.key)}
+                className={[
+                  "rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] transition",
+                  active
+                    ? "border-white/20 bg-white/10 text-white"
+                    : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white",
+                ].join(" ")}
+              >
+                {f.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Search */}
+        <div className="w-full sm:w-[280px]">
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search skills…"
+            className="w-full rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/85 placeholder:text-white/30 outline-none transition focus:border-white/20 focus:ring-2 focus:ring-white/10"
+          />
+        </div>
+      </div>
+
+      {/* Grid */}
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {filtered.map((skill) => {
+          const Icon = skill.Icon;
+          return (
+            <motion.div
+              key={skill.name}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              whileHover={{
+                y: -6,
+                borderColor: "rgba(255,255,255,0.18)",
+                boxShadow: "0 18px 40px rgba(0,0,0,0.45)",
+              }}
+              className="group rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
+            >
+              <div className="flex items-center gap-4">
+                <div className="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 bg-zinc-950/40 text-white/80">
+                  <Icon className="h-6 w-6" />
+                </div>
+
+                <div className="flex-1">
+                  <div className="text-sm font-semibold text-white/90">
+                    {skill.name}
+                  </div>
+                  <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
+                    {skill.category}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-5 h-px w-full bg-white/10" />
+
+              <div className="mt-4 text-sm text-white/60">
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-violet-300/80" />
+                  Building with this now
+                </span>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Empty state */}
+      {filtered.length === 0 && (
+        <div className="mt-10 rounded-3xl border border-white/10 bg-white/5 p-8 text-white/70 backdrop-blur-xl">
+          No skills found. Try another filter or search term.
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -518,42 +664,9 @@ export default function Home() {
           </AnimatedSection>
 
           {/* SKILLS */}
+          {/* SKILLS (cards + filters) */}
           <AnimatedSection id="skills" containerRef={scrollContainerRef}>
-            <div className="relative w-full py-16">
-              <SectionHeader
-                kicker="CURRENT STRENGTHS"
-                title="Skills"
-                subtitle="A simple view of what I’m strongest in right now — and what I’m improving day by day."
-              />
-
-              <div className="mt-10 max-w-3xl space-y-4">
-                {skillMeters.map((s) => (
-                  <div
-                    key={s.name}
-                    className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-semibold text-white/85">
-                        {s.name}
-                      </span>
-                      <span className="text-xs font-semibold uppercase tracking-[0.28em] text-white/50">
-                        {s.level}%
-                      </span>
-                    </div>
-
-                    <div className="mt-4 h-2 w-full rounded-full bg-zinc-950/60">
-                      <motion.div
-                        className="h-2 rounded-full bg-gradient-to-r from-violet-300/80 to-fuchsia-300/80"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${s.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <SkillsSection />
           </AnimatedSection>
 
           {/* PROJECTS */}
