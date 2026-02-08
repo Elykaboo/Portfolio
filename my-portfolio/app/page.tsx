@@ -7,7 +7,7 @@ import {
   useTransform,
   AnimatePresence,
 } from "framer-motion";
-import { FaGithub, FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaFacebook, FaInstagram, FaDownload } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 
@@ -16,7 +16,6 @@ const navItems = [
   { id: "about", label: "ABOUT ME" },
   { id: "projects", label: "PROJECTS" },
   { id: "skills", label: "SKILLS" },
-  { id: "contact", label: "LET’S WORK" },
 ];
 
 const skillMeters = [
@@ -84,12 +83,14 @@ function PremiumNavbar({ activeSection, onNavigate, isOpen, setIsOpen }) {
                 </button>
 
                 {/* CONTACT – desktop only */}
-                <button
-                  onClick={() => onNavigate("contact")}
-                  className="ml-auto hidden rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white sm:block"
+                <a
+                  href="/cv/Elyk-CV.pdf"
+                  download
+                  className="ml-auto hidden inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white sm:inline-flex"
                 >
-                  CONTACT
-                </button>
+                  <FaDownload size={14} />
+                  DOWNLOAD CV
+                </a>
               </div>
             </div>
 
@@ -130,15 +131,15 @@ function PremiumNavbar({ activeSection, onNavigate, isOpen, setIsOpen }) {
                   CLOSE
                 </button>
 
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    onNavigate("contact");
-                  }}
-                  className="ml-auto rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white"
+                <a
+                  href="/cv/Elyk-CV.pdf"
+                  download
+                  onClick={() => setIsOpen(false)}
+                  className="ml-auto inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white"
                 >
-                  CONTACT
-                </button>
+                  <FaDownload size={14} />
+                  DOWNLOAD CV
+                </a>
               </div>
             </div>
 
@@ -732,3 +733,4 @@ export default function Home() {
     </main>
   );
 }
+
