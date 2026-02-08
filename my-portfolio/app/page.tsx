@@ -1,10 +1,23 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import { FaGithub, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
+
+const navItems = [
+  { id: "top", label: "HOME" },
+  { id: "about", label: "ABOUT ME" },
+  { id: "projects", label: "PROJECTS" },
+  { id: "skills", label: "SKILLS" },
+  { id: "contact", label: "LET’S WORK" },
+];
 
 const skillMeters = [
   { name: "HTML/CSS", level: 75 },
@@ -13,8 +26,6 @@ const skillMeters = [
   { name: "Tailwind", level: 70 },
   { name: "Git", level: 60 },
 ];
-
-const skills = ["HTML", "CSS", "JavaScript", "Next.js", "Tailwind", "Git"];
 
 const projects = [
   {
@@ -34,12 +45,200 @@ const projects = [
   },
 ];
 
+function PremiumNavbar({ activeSection, onNavigate, isOpen, setIsOpen }) {
+  return (
+    <>
+      {/* Floating Glass Navbar (mobile fixed) */}
+      <div className="sticky top-0 z-50 pt-3 sm:pt-4">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+          <div className="relative">
+            {/* glow (desktop only) */}
+            <div className="pointer-events-none absolute inset-0 -z-10 hidden blur-2xl sm:block">
+              <div className="mx-auto h-14 w-[92%] rounded-full bg-gradient-to-r from-violet-500/15 via-fuchsia-500/10 to-indigo-500/15" />
+            </div>
+
+            <div className="rounded-full border border-white/10 bg-zinc-950/50 backdrop-blur-xl">
+              <div className="relative flex h-12 items-center px-4 sm:h-14 sm:px-5">
+                {/* Logo */}
+                <button
+                  onClick={() => onNavigate("top")}
+                  className="text-xs font-semibold uppercase tracking-[0.28em] text-white/90 transition hover:text-white sm:tracking-[0.34em]"
+                >
+                  ELYK
+                </button>
+
+                {/* MENU – desktop centered */}
+                <button
+                  onClick={() => setIsOpen(true)}
+                  className="absolute left-1/2 hidden -translate-x-1/2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white sm:block"
+                >
+                  MENU
+                </button>
+
+                {/* MENU – mobile right */}
+                <button
+                  onClick={() => setIsOpen(true)}
+                  className="ml-auto rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/80 transition hover:bg-white/10 hover:text-white sm:hidden"
+                >
+                  MENU
+                </button>
+
+                {/* CONTACT – desktop only */}
+                <button
+                  onClick={() => onNavigate("contact")}
+                  className="ml-auto hidden rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white sm:block"
+                >
+                  CONTACT
+                </button>
+              </div>
+            </div>
+
+            {/* Active section indicator – desktop only */}
+            <div className="mt-3 hidden justify-center sm:flex">
+              <div className="relative inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-violet-300/80" />
+                <span className="text-[10px] font-semibold uppercase tracking-[0.34em] text-white/60">
+                  {navItems.find((n) => n.id === activeSection)?.label ||
+                    "HOME"}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Fullscreen Overlay Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="fixed inset-0 z-[100] bg-zinc-950/70 backdrop-blur-2xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Top row inside overlay */}
+            <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-6 sm:pt-8">
+              <div className="relative flex items-center">
+                <span className="text-xs font-semibold uppercase tracking-[0.34em] text-white/80">
+                  ELYK
+                </span>
+
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="absolute left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white"
+                >
+                  CLOSE
+                </button>
+
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    onNavigate("contact");
+                  }}
+                  className="ml-auto rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white"
+                >
+                  CONTACT
+                </button>
+              </div>
+            </div>
+
+            {/* Centered menu */}
+            <motion.nav
+              className="flex h-full w-full items-center justify-center px-6"
+              initial={{ y: 16, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 10, opacity: 0 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+            >
+              <div className="text-center">
+                {navItems.map((item, idx) => {
+                  const isActive = activeSection === item.id;
+
+                  return (
+                    <motion.button
+                      key={item.id}
+                      onClick={() => {
+                        setIsOpen(false);
+                        onNavigate(item.id);
+                      }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.35,
+                        ease: "easeOut",
+                        delay: 0.05 * idx,
+                      }}
+                      className={[
+                        "block w-full py-3 transition",
+                        "text-3xl sm:text-6xl font-extrabold uppercase tracking-[0.16em] sm:tracking-[0.18em]",
+                        isActive
+                          ? "text-white"
+                          : "text-white/55 hover:text-white",
+                      ].join(" ")}
+                    >
+                      <span className="relative">
+                        {item.label}
+                        {isActive && (
+                          <span className="pointer-events-none absolute -inset-x-6 -inset-y-3 -z-10 rounded-2xl bg-gradient-to-r from-violet-500/15 via-fuchsia-500/10 to-indigo-500/15 blur-xl" />
+                        )}
+                      </span>
+                    </motion.button>
+                  );
+                })}
+
+                <div className="mx-auto mt-10 h-px w-28 bg-white/15" />
+                <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.34em] text-white/45">
+                  SELECT A SECTION
+                </p>
+              </div>
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+/** Full-page background so the glow isn't clipped by max-width/padding */
+function PageAtmosphere() {
+  return (
+    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div className="absolute -top-40 left-10 h-[520px] w-[520px] rounded-full bg-violet-500/15 blur-[140px]" />
+      <div className="absolute top-24 right-10 h-[460px] w-[460px] rounded-full bg-fuchsia-500/10 blur-[140px]" />
+      <div className="absolute -bottom-44 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-indigo-500/10 blur-[160px]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-950/90 to-zinc-950" />
+    </div>
+  );
+}
+
+function SectionHeader({ kicker, title, subtitle }) {
+  return (
+    <div className="max-w-3xl">
+      {kicker && (
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
+          <span className="h-1.5 w-1.5 rounded-full bg-violet-300/80" />
+          {kicker}
+        </div>
+      )}
+
+      <h2 className="mt-6 text-2xl font-extrabold uppercase tracking-[0.14em] text-white sm:text-3xl">
+        {title}
+      </h2>
+
+      {subtitle && (
+        <p className="mt-4 text-sm leading-6 text-zinc-300 sm:text-base">
+          {subtitle}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function AnimatedSection({ id, className = "", children, containerRef }) {
   const ref = useRef(null);
 
-  // ✅ IMPORTANT: useScroll must track the SAME scroll container you're scrolling
   const { scrollYProgress } = useScroll({
-    container: containerRef, // 👈 this makes it track the scroll div, not window
+    container: containerRef,
     target: ref,
     offset: ["start 85%", "end 15%"],
   });
@@ -52,7 +251,7 @@ function AnimatedSection({ id, className = "", children, containerRef }) {
       ref={ref}
       id={id}
       style={{ opacity, y }}
-      className={`snap-start min-h-screen flex items-center ${className}`}
+      className={`snap-start min-h-screen flex items-center pt-20 relative ${className}`}
     >
       {children}
     </motion.section>
@@ -61,14 +260,18 @@ function AnimatedSection({ id, className = "", children, containerRef }) {
 
 export default function Home() {
   const scrollContainerRef = useRef(null);
+  const [activeSection, setActiveSection] = useState("top");
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
-    // Remove hash on refresh
     if (window.location.hash) {
       history.replaceState(null, "", window.location.pathname);
     }
 
-    // ✅ Scroll the container to top (NOT window)
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({
         top: 0,
@@ -76,152 +279,322 @@ export default function Home() {
         behavior: "auto",
       });
     }
+
+    const rootEl = scrollContainerRef.current;
+    if (!rootEl) return;
+
+    const sectionEls = navItems
+      .map((n) => document.getElementById(n.id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort(
+            (a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0),
+          );
+
+        if (visible[0]?.target?.id) setActiveSection(visible[0].target.id);
+      },
+      { root: rootEl, threshold: [0.35, 0.5, 0.65] },
+    );
+
+    sectionEls.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!scrollContainerRef.current) return;
+    scrollContainerRef.current.style.overflowY = menuOpen ? "hidden" : "scroll";
+  }, [menuOpen]);
+
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100">
-      {/* ✅ SNAP SCROLL CONTAINER */}
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 font-main">
+      <PageAtmosphere />
+
       <div
         ref={scrollContainerRef}
-        className="h-screen overflow-y-scroll snap-y snap-proximity scroll-smooth"
+        className="h-screen overflow-y-scroll snap-y snap-proximity scroll-smooth bg-transparent"
       >
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+          <PremiumNavbar
+            activeSection={activeSection}
+            onNavigate={scrollToSection}
+            isOpen={menuOpen}
+            setIsOpen={setMenuOpen}
+          />
+
           {/* HERO */}
           <AnimatedSection id="top" containerRef={scrollContainerRef}>
-            <motion.header
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="w-full py-16"
-            >
-              <p className="text-sm text-zinc-400">Portfolio</p>
-
-              <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
-                Hi, I’m Elyk !
-              </h1>
-
-              <p className="mt-6 max-w-2xl text-lg text-zinc-300">
-                I’m a beginner web developer building projects with Next.js. I
-                like clean UI, simple code, and learning by building.
-              </p>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <button
-                  onClick={() =>
-                    document
-                      .getElementById("projects")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                  className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-zinc-900 hover:opacity-90"
+            <div className="relative w-full py-12 sm:py-16">
+              <div className="grid items-start gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+                <motion.div
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                  View Projects
-                </button>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
+                    <span className="h-1.5 w-1.5 rounded-full bg-violet-300/80" />
+                    BUILDING MODERN WEB EXPERIENCES
+                  </div>
 
-                <button
-                  onClick={() =>
-                    document
-                      .getElementById("contact")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                  className="rounded-xl border border-zinc-700 px-5 py-3 text-sm font-semibold text-zinc-100 hover:bg-zinc-900"
+                  <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
+                    I build{" "}
+                    <span className="bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+                      clean
+                    </span>{" "}
+                    interfaces
+                    <br className="hidden sm:block" /> with{" "}
+                    <span className="bg-gradient-to-r from-violet-200 to-fuchsia-200 bg-clip-text text-transparent">
+                      smooth motion
+                    </span>
+                    .
+                  </h1>
+
+                  <p className="mt-4 text-base font-semibold text-white/70">
+                    I’m <span className="text-white">Elyk</span> — a developer
+                    focused on design, performance, and maintainable code.
+                  </p>
+
+                  <p className="mt-5 max-w-xl text-sm leading-6 text-zinc-300 sm:text-base">
+                    I enjoy turning ideas into polished products. I’m currently
+                    growing my skills in Next.js and building projects that look
+                    good, feel fast, and scale cleanly.
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {["Next.js", "UI Motion", "Responsive", "Clean Code"].map(
+                      (t) => (
+                        <span
+                          key={t}
+                          className="rounded-full border border-white/10 bg-zinc-950/40 px-3 py-1 text-xs font-semibold tracking-[0.14em] text-white/70"
+                        >
+                          {t}
+                        </span>
+                      ),
+                    )}
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap items-center gap-3">
+                    <button
+                      onClick={() => scrollToSection("projects")}
+                      className="rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-zinc-900 transition hover:opacity-90"
+                    >
+                      Explore Projects
+                    </button>
+
+                    <button
+                      onClick={() => scrollToSection("contact")}
+                      className="rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/85 backdrop-blur transition hover:bg-white/10"
+                    >
+                      Work With Me
+                    </button>
+                  </div>
+
+                  <div className="mt-10 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/40">
+                    Scroll ↓
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+                  className="relative"
                 >
-                  Contact Me
-                </button>
+                  <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+                    <div className="relative flex items-center justify-between">
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/50">
+                        CURRENT FOCUS
+                      </span>
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/50">
+                        2026
+                      </span>
+                    </div>
+
+                    <div className="relative mt-6 flex flex-wrap gap-2">
+                      {["Next.js", "Tailwind", "Framer Motion", "Git"].map(
+                        (s) => (
+                          <span
+                            key={s}
+                            className="rounded-full border border-white/10 bg-zinc-950/30 px-3 py-1 text-xs font-semibold text-white/70"
+                          >
+                            {s}
+                          </span>
+                        ),
+                      )}
+                    </div>
+
+                    <div className="relative mt-8 rounded-2xl border border-white/10 bg-zinc-950/30 p-6">
+                      <div className="text-sm font-semibold text-white/85">
+                        Building a portfolio with
+                      </div>
+                      <div className="mt-2 text-3xl font-extrabold tracking-tight text-white/90">
+                        Snap Scroll + Motion
+                      </div>
+                      <p className="mt-3 text-sm text-white/55">
+                        Smooth section transitions, clean layout, and a premium
+                        feel.
+                      </p>
+                    </div>
+
+                    <div className="relative mt-6 grid grid-cols-2 gap-3">
+                      <div className="rounded-2xl border border-white/10 bg-zinc-950/30 p-4">
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
+                          Style
+                        </div>
+                        <div className="mt-2 text-sm font-semibold text-white/80">
+                          Minimal / Dark
+                        </div>
+                      </div>
+                      <div className="rounded-2xl border border-white/10 bg-zinc-950/30 p-4">
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
+                          Goal
+                        </div>
+                        <div className="mt-2 text-sm font-semibold text-white/80">
+                          Client-ready
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pointer-events-none absolute -bottom-5 left-6 rounded-2xl border border-white/10 bg-zinc-950/50 px-4 py-3 backdrop-blur">
+                    <div className="text-xs font-semibold text-white/85">
+                      Available for small projects
+                    </div>
+                    <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
+                      Let’s build something
+                    </div>
+                  </div>
+                </motion.div>
               </div>
-            </motion.header>
-          </AnimatedSection>
-
-          {/* ABOUT */}
-          <AnimatedSection
-            id="about"
-            className="border-t border-zinc-800"
-            containerRef={scrollContainerRef}
-          >
-            <div className="w-full py-16 max-w-3xl">
-              <h2 className="text-2xl font-semibold">About</h2>
-              <p className="mt-4 text-zinc-300">
-                Write a short intro about yourself here. Mention what you’re
-                learning, what you enjoy building, and what kind of roles you’re
-                aiming for.
-              </p>
             </div>
           </AnimatedSection>
 
-          {/* SKILLS (meter style) */}
-          <AnimatedSection
-            id="skills"
-            className="border-t border-zinc-800"
-            containerRef={scrollContainerRef}
-          >
-            <div className="w-full py-16 max-w-3xl">
-              <h2 className="text-2xl font-semibold">Skills</h2>
-              <p className="mt-3 text-zinc-300">
-                A simple view of what I’m currently strongest in (and improving
-                daily).
-              </p>
+          {/* ABOUT */}
+          <AnimatedSection id="about" containerRef={scrollContainerRef}>
+            <div className="relative w-full py-16">
+              <SectionHeader
+                kicker="A QUICK INTRO"
+                title="About Me"
+                subtitle="A short section to explain what you’re learning, what you love building, and what kind of work you’re aiming for."
+              />
 
-              <div className="mt-8 space-y-4">
+              <div className="mt-10 grid gap-4 sm:grid-cols-2">
+                {[
+                  {
+                    title: "Design-minded",
+                    text: "I like clean layouts, good spacing, and UI that feels calm and intentional.",
+                  },
+                  {
+                    title: "Motion & Polish",
+                    text: "I use subtle animation to make pages feel premium—without being distracting.",
+                  },
+                  {
+                    title: "Build to Learn",
+                    text: "I learn fastest by shipping. Small improvements daily, big results over time.",
+                  },
+                  {
+                    title: "Client-ready",
+                    text: "I focus on quality: readable code, responsiveness, and performance basics.",
+                  },
+                ].map((card) => (
+                  <div
+                    key={card.title}
+                    className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
+                  >
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/50">
+                      {card.title}
+                    </div>
+                    <p className="mt-4 text-sm leading-6 text-zinc-300">
+                      {card.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* SKILLS */}
+          <AnimatedSection id="skills" containerRef={scrollContainerRef}>
+            <div className="relative w-full py-16">
+              <SectionHeader
+                kicker="CURRENT STRENGTHS"
+                title="Skills"
+                subtitle="A simple view of what I’m strongest in right now — and what I’m improving day by day."
+              />
+
+              <div className="mt-10 max-w-3xl space-y-4">
                 {skillMeters.map((s) => (
-                  <motion.div
+                  <div
                     key={s.name}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.35, ease: "easeOut" }}
-                    className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5"
+                    className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold">{s.name}</span>
-                      <span className="text-sm text-zinc-400">{s.level}%</span>
+                      <span className="text-sm font-semibold text-white/85">
+                        {s.name}
+                      </span>
+                      <span className="text-xs font-semibold uppercase tracking-[0.28em] text-white/50">
+                        {s.level}%
+                      </span>
                     </div>
 
-                    <div className="mt-3 h-2 w-full rounded-full bg-zinc-950">
-                      <div
-                        className="h-2 rounded-full bg-white/90"
-                        style={{ width: `${s.level}%` }}
+                    <div className="mt-4 h-2 w-full rounded-full bg-zinc-950/60">
+                      <motion.div
+                        className="h-2 rounded-full bg-gradient-to-r from-violet-300/80 to-fuchsia-300/80"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${s.level}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
                       />
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
           </AnimatedSection>
 
           {/* PROJECTS */}
-          <AnimatedSection
-            id="projects"
-            className="border-t border-zinc-800"
-            containerRef={scrollContainerRef}
-          >
-            <div className="w-full py-16">
-              <h2 className="text-2xl font-semibold">Projects</h2>
+          <AnimatedSection id="projects" containerRef={scrollContainerRef}>
+            <div className="relative w-full py-16">
+              <SectionHeader
+                kicker="SELECTED WORK"
+                title="Projects"
+                subtitle="A few things I’ve built while learning. Swap these with real projects as you ship more."
+              />
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 {projects.map((p) => (
                   <motion.article
                     key={p.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    whileHover={{
-                      y: -6,
-                      backgroundColor: "rgba(24, 24, 27, 0.9)",
-                      borderColor: "rgba(255, 255, 255, 0.15)",
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
-                    }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    viewport={{ once: true }}
-                    className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5"
+                    whileHover={{ y: -6 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="group rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
                   >
-                    <h3 className="text-lg font-semibold">{p.title}</h3>
-                    <p className="mt-2 text-sm text-zinc-300">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="text-lg font-semibold text-white/90">
+                        {p.title}
+                      </h3>
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/40">
+                        case
+                      </span>
+                    </div>
+
+                    <p className="mt-3 text-sm leading-6 text-zinc-300">
                       {p.description}
                     </p>
 
+                    <div className="mt-6 h-px w-full bg-white/10" />
+
                     <a
                       href={p.link}
-                      className="mt-4 inline-block text-sm font-semibold text-white underline underline-offset-4"
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition group-hover:text-white"
                     >
-                      View →
+                      View Project{" "}
+                      <span className="transition group-hover:translate-x-1">
+                        →
+                      </span>
                     </a>
                   </motion.article>
                 ))}
@@ -230,126 +603,128 @@ export default function Home() {
           </AnimatedSection>
 
           {/* CONTACT */}
-          <AnimatedSection
-            id="contact"
-            className="border-t border-zinc-800"
-            containerRef={scrollContainerRef}
-          >
-            <div className="w-full py-16">
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-8 text-center">
-                <h2 className="text-2xl font-semibold text-white">
-                  Contact Me
-                </h2>
+          <AnimatedSection id="contact" containerRef={scrollContainerRef}>
+            <div className="relative w-full py-16">
+              <SectionHeader
+                kicker="LET’S TALK"
+                title="Let’s Work"
+                subtitle="Tell me about your idea. I’m open to collaborations, small freelance work, and learning opportunities."
+              />
 
-                <p className="mt-3 text-zinc-300">
-                  Got a project, idea, or just want to say hi? I’m always open
-                  to connecting.
-                </p>
-
-                <form
-                  className="mt-8 space-y-4 text-left"
-                  onSubmit={(e) => e.preventDefault()}
-                >
-                  <div>
-                    <label className="mb-1 block text-sm text-zinc-400">
-                      Your Full Name
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="John Doe"
-                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 focus:border-white focus:outline-none"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="mb-1 block text-sm text-zinc-400">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      placeholder="you@email.com"
-                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 focus:border-white focus:outline-none"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="mb-1 block text-sm text-zinc-400">
-                      Message
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="Write your message here..."
-                      className="w-full resize-none rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 focus:border-white focus:outline-none"
-                      required
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full rounded-xl bg-white px-6 py-3 text-sm font-semibold text-zinc-900 transition hover:opacity-90"
+              <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.9fr]">
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
+                  <form
+                    className="space-y-4"
+                    onSubmit={(e) => e.preventDefault()}
                   >
-                    Send Message
-                  </button>
-                </form>
+                    <div>
+                      <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
+                        Your Full Name
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="John Doe"
+                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/90 placeholder:text-white/30 outline-none transition focus:border-violet-300/50 focus:ring-2 focus:ring-violet-400/15"
+                        required
+                      />
+                    </div>
 
-                <div className="mt-6 flex justify-center text-zinc-400">
-                  <div className="flex items-center gap-6">
-                    <a
-                      href="mailto:kyleyambaoliwanag@gmail.com"
-                      aria-label="Email"
-                      className="transition hover:-translate-y-1 hover:text-white"
-                    >
-                      <MdEmail size={26} />
-                    </a>
+                    <div>
+                      <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        placeholder="you@email.com"
+                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/90 placeholder:text-white/30 outline-none transition focus:border-fuchsia-300/50 focus:ring-2 focus:ring-fuchsia-400/15"
+                        required
+                      />
+                    </div>
 
-                    <a
-                      href="https://github.com/elykaboo"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="GitHub"
-                      className="transition hover:-translate-y-1 hover:text-white"
-                    >
-                      <FaGithub size={24} />
-                    </a>
+                    <div>
+                      <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
+                        Message
+                      </label>
+                      <textarea
+                        rows={5}
+                        placeholder="Write your message..."
+                        className="w-full resize-none rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/90 placeholder:text-white/30 outline-none transition focus:border-white/20 focus:ring-2 focus:ring-white/10"
+                        required
+                      />
+                    </div>
 
-                    <a
-                      href="https://facebook.com/elykaborat"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Facebook"
-                      className="transition hover:-translate-y-1 hover:text-white"
+                    <button
+                      type="submit"
+                      className="w-full rounded-2xl bg-gradient-to-r from-violet-400/80 to-fuchsia-400/80 px-6 py-3 text-sm font-semibold text-zinc-950 transition hover:opacity-95"
                     >
-                      <FaFacebook size={24} />
-                    </a>
+                      Send Message
+                    </button>
+                  </form>
+                </div>
 
-                    <a
-                      href="https://x.com/kyleadrn"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="X"
-                      className="transition hover:-translate-y-1 hover:text-white"
-                    >
-                      <FaXTwitter size={24} />
-                    </a>
-
-                    <a
-                      href="https://instagram.com/lykedrian"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Instagram"
-                      className="transition hover:-translate-y-1 hover:text-white"
-                    >
-                      <FaInstagram size={24} />
-                    </a>
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/50">
+                    SOCIALS
                   </div>
+                  <p className="mt-4 text-sm leading-6 text-zinc-300">
+                    If you prefer, message me through socials. I’m most active
+                    on GitHub and email.
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    {[
+                      {
+                        icon: <MdEmail size={20} />,
+                        label: "Email",
+                        href: "mailto:kyleyambaoliwanag@gmail.com",
+                      },
+                      {
+                        icon: <FaGithub size={18} />,
+                        label: "GitHub",
+                        href: "https://github.com/elykaboo",
+                      },
+                      {
+                        icon: <FaFacebook size={18} />,
+                        label: "Facebook",
+                        href: "https://facebook.com/elykaborat",
+                      },
+                      {
+                        icon: <FaXTwitter size={18} />,
+                        label: "X",
+                        href: "https://x.com/kyleadrn",
+                      },
+                      {
+                        icon: <FaInstagram size={18} />,
+                        label: "Instagram",
+                        href: "https://instagram.com/lykedrian",
+                      },
+                    ].map((s) => (
+                      <a
+                        key={s.label}
+                        href={s.href}
+                        target={
+                          s.href.startsWith("http") ? "_blank" : undefined
+                        }
+                        rel={
+                          s.href.startsWith("http")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-zinc-950/30 px-4 py-3 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
+                      >
+                        {s.icon}
+                        {s.label}
+                      </a>
+                    ))}
+                  </div>
+
+                  <div className="mt-10 h-px w-full bg-white/10" />
+
+                  <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/40">
+                    © {new Date().getFullYear()} ELYK — BUILT WITH NEXT.JS
+                  </p>
                 </div>
               </div>
-
-              <p className="mt-8 text-center text-sm text-zinc-500">
-                © {new Date().getFullYear()} Kyle. Built with Next.js.
-              </p>
             </div>
           </AnimatedSection>
         </div>
