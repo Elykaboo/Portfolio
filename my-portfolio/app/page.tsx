@@ -668,7 +668,6 @@ export default function Home() {
                   <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
                     <div className="relative overflow-hidden rounded-2xl">
                       <img
-                        src="/MyPics/MyPic_1.jpg"
                         alt="Kyle / Elyk portrait"
                         className="h-[360px] w-full object-cover"
                       />
@@ -758,13 +757,28 @@ export default function Home() {
                 <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
                   <form
                     className="space-y-4"
-                    onSubmit={(e) => e.preventDefault()}
+                    action="https://formspree.io/f/xbdadlwq"
+                    method="POST"
                   >
+                    <input
+                      type="hidden"
+                      name="_subject"
+                      value="New Portfolio Message"
+                    />
+                    <input
+                      type="text"
+                      name="_gotcha"
+                      className="hidden"
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+
                     <div>
                       <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
                         Your Full Name
                       </label>
                       <input
+                        name="name"
                         type="text"
                         placeholder="John Doe"
                         className="w-full rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/90 placeholder:text-white/30 outline-none transition focus:border-violet-300/50 focus:ring-2 focus:ring-violet-400/15"
@@ -777,6 +791,7 @@ export default function Home() {
                         Email Address
                       </label>
                       <input
+                        name="_replyto"
                         type="email"
                         placeholder="you@email.com"
                         className="w-full rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/90 placeholder:text-white/30 outline-none transition focus:border-fuchsia-300/50 focus:ring-2 focus:ring-fuchsia-400/15"
@@ -789,6 +804,7 @@ export default function Home() {
                         Message
                       </label>
                       <textarea
+                        name="message"
                         rows={5}
                         placeholder="Write your message..."
                         className="w-full resize-none rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/90 placeholder:text-white/30 outline-none transition focus:border-white/20 focus:ring-2 focus:ring-white/10"
