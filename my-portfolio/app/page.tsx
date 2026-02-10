@@ -1,12 +1,9 @@
 "use client";
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import { useEffect, useRef, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
+import type { ComponentType } from "react";
+
 import {
   motion,
   useScroll,
@@ -14,11 +11,6 @@ import {
   AnimatePresence,
 } from "framer-motion";
 
-import { FaGithub, FaFacebook, FaInstagram, FaDownload } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { MdEmail } from "react-icons/md";
-
-import type { IconType } from "react-icons";
 import {
   SiHtml5,
   SiCss3,
@@ -32,18 +24,24 @@ import {
   SiMongodb,
   SiGit,
   SiGithub,
-  SiOpenjdk, // ✅ Java icon replacement
+  SiOpenjdk,
 } from "react-icons/si";
 
-/* ----------------------------- Types ----------------------------- */
+import { FaGithub, FaFacebook, FaInstagram, FaDownload } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 
-type NavItem = { id: string; label: string };
-
+/** -----------------------------
+ * Types
+ * ------------------------------*/
+type NavId = "top" | "about" | "projects" | "skills" | "contact";
 type SkillCategory = "frontend" | "backend" | "database" | "tools";
 
-type Skill = {
+type NavItem = { id: NavId; label: string };
+
+type SkillItem = {
   name: string;
-  Icon: IconType;
+  Icon: ComponentType<{ className?: string }>;
   category: SkillCategory;
 };
 
@@ -54,14 +52,15 @@ type Project = {
 };
 
 type PremiumNavbarProps = {
-  activeSection: string;
-  onNavigate: (id: string) => void;
+  activeSection: NavId;
+  onNavigate: (id: NavId) => void;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-/* ----------------------------- Data ------------------------------ */
-
+/** -----------------------------
+ * Data
+ * ------------------------------*/
 const navItems: NavItem[] = [
   { id: "top", label: "HOME" },
   { id: "about", label: "ABOUT ME" },
@@ -70,7 +69,7 @@ const navItems: NavItem[] = [
   { id: "contact", label: "LET'S WORK" },
 ];
 
-const skillsData: Skill[] = [
+const skillsData: SkillItem[] = [
   { name: "HTML", Icon: SiHtml5, category: "frontend" },
   { name: "CSS", Icon: SiCss3, category: "frontend" },
   { name: "JavaScript", Icon: SiJavascript, category: "frontend" },
@@ -107,8 +106,9 @@ const projects: Project[] = [
   },
 ];
 
-/* --------------------------- Components -------------------------- */
-
+/** -----------------------------
+ * Components
+ * ------------------------------*/
 function PremiumNavbar({
   activeSection,
   onNavigate,
@@ -117,18 +117,15 @@ function PremiumNavbar({
 }: PremiumNavbarProps) {
   return (
     <>
-      {/* Floating Glass Navbar (mobile fixed) */}
       <div className="sticky top-0 z-50 pt-3 sm:pt-4">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="relative">
-            {/* glow (desktop only) */}
             <div className="pointer-events-none absolute inset-0 -z-10 hidden blur-2xl sm:block">
               <div className="mx-auto h-14 w-[92%] rounded-full bg-gradient-to-r from-violet-500/15 via-fuchsia-500/10 to-indigo-500/15" />
             </div>
 
             <div className="rounded-full border border-white/10 bg-zinc-950/50 backdrop-blur-xl">
               <div className="relative flex h-12 items-center px-4 sm:h-14 sm:px-5">
-                {/* Logo */}
                 <button
                   onClick={() => onNavigate("top")}
                   className="text-xs font-semibold uppercase tracking-[0.28em] text-white/90 transition hover:text-white sm:tracking-[0.34em]"
@@ -136,7 +133,6 @@ function PremiumNavbar({
                   ELYK
                 </button>
 
-                {/* MENU – desktop centered */}
                 <button
                   onClick={() => setIsOpen(true)}
                   className="absolute left-1/2 hidden -translate-x-1/2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white sm:block"
@@ -144,7 +140,6 @@ function PremiumNavbar({
                   MENU
                 </button>
 
-                {/* MENU – mobile right */}
                 <button
                   onClick={() => setIsOpen(true)}
                   className="ml-auto rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/80 transition hover:bg-white/10 hover:text-white sm:hidden"
@@ -152,7 +147,6 @@ function PremiumNavbar({
                   MENU
                 </button>
 
-                {/* DOWNLOAD – desktop only */}
                 <a
                   href="/cv/Elyk-CV.pdf"
                   download
@@ -164,12 +158,11 @@ function PremiumNavbar({
               </div>
             </div>
 
-            {/* Active section indicator – desktop only */}
             <div className="mt-3 hidden justify-center sm:flex">
               <div className="relative inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur">
                 <span className="h-1.5 w-1.5 rounded-full bg-violet-300/80" />
                 <span className="text-[10px] font-semibold uppercase tracking-[0.34em] text-white/60">
-                  {navItems.find((n) => n.id === activeSection)?.label ||
+                  {navItems.find((n) => n.id === activeSection)?.label ??
                     "HOME"}
                 </span>
               </div>
@@ -178,7 +171,6 @@ function PremiumNavbar({
         </div>
       </div>
 
-      {/* Fullscreen Overlay Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -187,7 +179,6 @@ function PremiumNavbar({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            {/* Top row inside overlay */}
             <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-6 sm:pt-8">
               <div className="relative flex items-center">
                 <span className="text-xs font-semibold uppercase tracking-[0.34em] text-white/80">
@@ -213,7 +204,6 @@ function PremiumNavbar({
               </div>
             </div>
 
-            {/* Centered menu */}
             <motion.nav
               className="flex h-full w-full items-center justify-center px-6"
               initial={{ y: 16, opacity: 0 }}
@@ -270,25 +260,15 @@ function PremiumNavbar({
   );
 }
 
-/** Full-page background so the glow isn't clipped by max-width/padding */
-function PageAtmosphere() {
-  return (
-    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div className="absolute -top-40 left-10 h-[520px] w-[520px] rounded-full bg-violet-500/15 blur-[140px]" />
-      <div className="absolute top-24 right-10 h-[460px] w-[460px] rounded-full bg-fuchsia-500/10 blur-[140px]" />
-      <div className="absolute -bottom-44 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-indigo-500/10 blur-[160px]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-950/90 to-zinc-950" />
-    </div>
-  );
-}
-
-type SectionHeaderProps = {
+function SectionHeader({
+  kicker,
+  title,
+  subtitle,
+}: {
   kicker?: string;
   title: string;
   subtitle?: string;
-};
-
-function SectionHeader({ kicker, title, subtitle }: SectionHeaderProps) {
+}) {
   return (
     <div className="max-w-3xl">
       {kicker && (
@@ -311,24 +291,22 @@ function SectionHeader({ kicker, title, subtitle }: SectionHeaderProps) {
   );
 }
 
-type AnimatedSectionProps = {
-  id: string;
-  className?: string;
-  children: React.ReactNode;
-  containerRef: React.RefObject<HTMLElement | null>;
-};
-
 function AnimatedSection({
   id,
   className = "",
   children,
   containerRef,
-}: AnimatedSectionProps) {
+}: {
+  id: NavId;
+  className?: string;
+  children: React.ReactNode;
+  containerRef: React.RefObject<HTMLDivElement | null>;
+}) {
   const ref = useRef<HTMLElement | null>(null);
 
   const { scrollYProgress } = useScroll({
-    container: containerRef as React.RefObject<Element>,
-    target: ref as React.RefObject<Element>,
+    container: containerRef,
+    target: ref,
     offset: ["start 85%", "end 15%"],
   });
 
@@ -370,10 +348,9 @@ function SkillsSection() {
       <SectionHeader
         kicker="TOOLKIT"
         title="Skills"
-        subtitle="Cards with real icons — cleaner than levels. Filter by category or search."
+        subtitle="Cards with real icons — filter by category or search."
       />
 
-      {/* Filters */}
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-2">
           {filters.map((f) => {
@@ -395,7 +372,6 @@ function SkillsSection() {
           })}
         </div>
 
-        {/* Search */}
         <div className="w-full sm:w-[280px]">
           <input
             value={query}
@@ -406,7 +382,6 @@ function SkillsSection() {
         </div>
       </div>
 
-      {/* Grid */}
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((skill) => {
           const Icon = skill.Icon;
@@ -452,7 +427,6 @@ function SkillsSection() {
         })}
       </div>
 
-      {/* Empty state */}
       {filtered.length === 0 && (
         <div className="mt-10 rounded-3xl border border-white/10 bg-white/5 p-8 text-white/70 backdrop-blur-xl">
           No skills found. Try another filter or search term.
@@ -462,14 +436,15 @@ function SkillsSection() {
   );
 }
 
-/* ------------------------------ Page ----------------------------- */
-
+/** -----------------------------
+ * Page
+ * ------------------------------*/
 export default function Home() {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const [activeSection, setActiveSection] = useState<string>("top");
+  const [activeSection, setActiveSection] = useState<NavId>("top");
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = (id: NavId) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -478,13 +453,11 @@ export default function Home() {
       history.replaceState(null, "", window.location.pathname);
     }
 
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "auto",
-      });
-    }
+    scrollContainerRef.current?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    });
 
     const rootEl = scrollContainerRef.current;
     if (!rootEl) return;
@@ -501,7 +474,8 @@ export default function Home() {
             (a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0),
           );
 
-        if (visible[0]?.target?.id) setActiveSection(visible[0].target.id);
+        const id = visible[0]?.target?.id as NavId | undefined;
+        if (id) setActiveSection(id);
       },
       { root: rootEl, threshold: [0.35, 0.5, 0.65] },
     );
@@ -517,8 +491,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 font-main">
-      <PageAtmosphere />
-
       <div
         ref={scrollContainerRef}
         className="h-screen overflow-y-scroll snap-y snap-proximity scroll-smooth bg-transparent"
@@ -531,7 +503,6 @@ export default function Home() {
             setIsOpen={setMenuOpen}
           />
 
-          {/* HERO */}
           <AnimatedSection id="top" containerRef={scrollContainerRef}>
             <div className="relative w-full py-12 sm:py-16">
               <div className="grid items-start gap-10 lg:grid-cols-[1.15fr_0.85fr]">
@@ -568,19 +539,6 @@ export default function Home() {
                     growing my skills in Next.js and building projects that look
                     good, feel fast, and scale cleanly.
                   </p>
-
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {["Next.js", "UI Motion", "Responsive", "Clean Code"].map(
-                      (t) => (
-                        <span
-                          key={t}
-                          className="rounded-full border border-white/10 bg-zinc-950/40 px-3 py-1 text-xs font-semibold tracking-[0.14em] text-white/70"
-                        >
-                          {t}
-                        </span>
-                      ),
-                    )}
-                  </div>
 
                   <div className="mt-8 flex flex-wrap items-center gap-3">
                     <button
@@ -644,25 +602,6 @@ export default function Home() {
                         feel.
                       </p>
                     </div>
-
-                    <div className="relative mt-6 grid grid-cols-2 gap-3">
-                      <div className="rounded-2xl border border-white/10 bg-zinc-950/30 p-4">
-                        <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
-                          Style
-                        </div>
-                        <div className="mt-2 text-sm font-semibold text-white/80">
-                          Minimal / Dark
-                        </div>
-                      </div>
-                      <div className="rounded-2xl border border-white/10 bg-zinc-950/30 p-4">
-                        <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
-                          Goal
-                        </div>
-                        <div className="mt-2 text-sm font-semibold text-white/80">
-                          Client-ready
-                        </div>
-                      </div>
-                    </div>
                   </div>
 
                   <div className="pointer-events-none absolute -bottom-5 left-6 rounded-2xl border border-white/10 bg-zinc-950/50 px-4 py-3 backdrop-blur">
@@ -678,7 +617,6 @@ export default function Home() {
             </div>
           </AnimatedSection>
 
-          {/* ABOUT */}
           <AnimatedSection id="about" containerRef={scrollContainerRef}>
             <div className="relative w-full py-16">
               <SectionHeader
@@ -729,7 +667,6 @@ export default function Home() {
 
                   <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
                     <div className="relative overflow-hidden rounded-2xl">
-                      {/* ✅ Use /... paths for files in /public */}
                       <img
                         src="/MyPics/MyPic_1.jpg"
                         alt="Kyle / Elyk portrait"
@@ -758,12 +695,10 @@ export default function Home() {
             </div>
           </AnimatedSection>
 
-          {/* SKILLS */}
           <AnimatedSection id="skills" containerRef={scrollContainerRef}>
             <SkillsSection />
           </AnimatedSection>
 
-          {/* PROJECTS */}
           <AnimatedSection id="projects" containerRef={scrollContainerRef}>
             <div className="relative w-full py-16">
               <SectionHeader
