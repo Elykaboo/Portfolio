@@ -628,37 +628,72 @@ export default function Home() {
                 subtitle="A short section to explain what you’re learning, what you love building, and what kind of work you’re aiming for."
               />
 
-              <div className="mt-10 grid gap-4 sm:grid-cols-2">
-                {[
-                  {
-                    title: "Design-minded",
-                    text: "I like clean layouts, good spacing, and UI that feels calm and intentional.",
-                  },
-                  {
-                    title: "Motion & Polish",
-                    text: "I use subtle animation to make pages feel premium—without being distracting.",
-                  },
-                  {
-                    title: "Build to Learn",
-                    text: "I learn fastest by shipping. Small improvements daily, big results over time.",
-                  },
-                  {
-                    title: "Client-ready",
-                    text: "I focus on quality: readable code, responsiveness, and performance basics.",
-                  },
-                ].map((card) => (
-                  <div
-                    key={card.title}
-                    className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
-                  >
-                    <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/50">
-                      {card.title}
+              <div className="mt-12 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+                {/* LEFT — Text cards */}
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {[
+                    {
+                      title: "Design-minded",
+                      text: "I like clean layouts, good spacing, and UI that feels calm and intentional.",
+                    },
+                    {
+                      title: "Motion & Polish",
+                      text: "I use subtle animation to make pages feel premium—without being distracting.",
+                    },
+                    {
+                      title: "Build to Learn",
+                      text: "I learn fastest by shipping. Small improvements daily, big results over time.",
+                    },
+                    {
+                      title: "Client-ready",
+                      text: "I focus on quality: readable code, responsiveness, and performance basics.",
+                    },
+                  ].map((card) => (
+                    <div
+                      key={card.title}
+                      className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition hover:border-white/20"
+                    >
+                      <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/50">
+                        {card.title}
+                      </div>
+                      <p className="mt-4 text-sm leading-6 text-zinc-300">
+                        {card.text}
+                      </p>
                     </div>
-                    <p className="mt-4 text-sm leading-6 text-zinc-300">
-                      {card.text}
+                  ))}
+                </div>
+
+                {/* RIGHT — Profile card */}
+                <div className="relative flex items-center justify-center">
+                  {/* glow */}
+                  <div className="absolute -inset-6 -z-10 rounded-full bg-gradient-to-tr from-violet-500/20 via-fuchsia-500/10 to-indigo-500/20 blur-3xl" />
+
+                  <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+                    <div className="relative overflow-hidden rounded-2xl">
+                      <img
+                        src="./MyPics/MyPic_1.jpg"
+                        alt="Kyle / Elyk portrait"
+                        className="h-[360px] w-full object-cover"
+                      />
+                    </div>
+
+                    <div className="mt-5 text-center">
+                      <div className="text-sm font-semibold text-white/90">
+                        Kyle “Elyk”
+                      </div>
+                      <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
+                        Frontend Developer
+                      </div>
+                    </div>
+
+                    <div className="mt-5 h-px w-full bg-white/10" />
+
+                    <p className="mt-4 text-center text-sm text-white/60">
+                      Focused on modern UI, motion, and building products that
+                      feel good to use.
                     </p>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
           </AnimatedSection>
