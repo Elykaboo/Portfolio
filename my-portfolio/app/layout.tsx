@@ -14,8 +14,8 @@ export default function RootLayout({
           <div className="splash-glow splash-glow-2" />
 
           <div className="splash-center">
-            <div className="splash-kicker">WELCOME</div>
-            <div className="splash-title">ELYK</div>
+            <div className="splash-kicker">Kyle's Portfolio</div>
+            <div className="splash-title">WELCOME</div>
             <div className="splash-line" />
             <div className="splash-sub">Loading portfolio…</div>
 
