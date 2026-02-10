@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 :root {
   --font-main: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -35,4 +39,128 @@ body {
 
 .font-main {
   font-family: var(--font-main);
+}
+
+/* ✅ Instant Splash Screen (no hydration delay) */
+#instant-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #09090b; /* zinc-950 */
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+
+  /* visible immediately, then fade out after ~2s */
+  animation: splashFadeOut 0.45s ease-out forwards;
+  animation-delay: 1.55s; /* 1.55 + 0.45 = 2.0s total */
+}
+
+@keyframes splashFadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.splash-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(140px);
+  opacity: 0.18;
+  transform: translateZ(0);
+}
+
+.splash-glow-1 {
+  width: 520px;
+  height: 520px;
+  top: -160px;
+  left: 40px;
+  background: rgba(139, 92, 246, 1); /* violet-ish */
+}
+
+.splash-glow-2 {
+  width: 460px;
+  height: 460px;
+  top: 80px;
+  right: 40px;
+  background: rgba(217, 70, 239, 1); /* fuchsia-ish */
+}
+
+.splash-center {
+  position: relative;
+  text-align: center;
+
+  /* little pop-in */
+  animation: splashPopIn 0.6s ease-out both;
+}
+
+@keyframes splashPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.splash-kicker {
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.splash-title {
+  margin-top: 14px;
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.splash-line {
+  margin: 18px auto 0;
+  height: 1px;
+  width: 112px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.splash-sub {
+  margin-top: 18px;
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.splash-bar {
+  margin: 22px auto 0;
+  width: 160px;
+  height: 4px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.splash-bar-fill {
+  height: 100%;
+  width: 50%;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.7);
+  animation: splashBarMove 1.2s ease-in-out infinite;
+}
+
+@keyframes splashBarMove {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(220%);
+  }
 }

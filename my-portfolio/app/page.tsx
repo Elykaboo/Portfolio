@@ -33,6 +33,7 @@ const navItems = [
   { id: "about", label: "ABOUT ME" },
   { id: "projects", label: "PROJECTS" },
   { id: "skills", label: "SKILLS" },
+  { id: "contact", label: "LET'S WORK"}
 ];
 
 const skillsData = [
@@ -414,6 +415,7 @@ export default function Home() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+
   useEffect(() => {
     if (window.location.hash) {
       history.replaceState(null, "", window.location.pathname);
@@ -458,8 +460,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 font-main">
-      <PageAtmosphere />
-
       <div
         ref={scrollContainerRef}
         className="h-screen overflow-y-scroll snap-y snap-proximity scroll-smooth bg-transparent"
