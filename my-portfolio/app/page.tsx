@@ -1,11 +1,24 @@
 "use client";
 
 import {
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
+import {
   motion,
   useScroll,
   useTransform,
   AnimatePresence,
 } from "framer-motion";
+
+import { FaGithub, FaFacebook, FaInstagram, FaDownload } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+
+import type { IconType } from "react-icons";
 import {
   SiHtml5,
   SiCss3,
@@ -19,24 +32,45 @@ import {
   SiMongodb,
   SiGit,
   SiGithub,
-  SiOpenjdk, // ✅ use this instead of SiJava
+  SiOpenjdk, // ✅ Java icon replacement
 } from "react-icons/si";
 
-import { useEffect, useRef, useState } from "react";
-import { FaGithub, FaFacebook, FaInstagram, FaDownload } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { MdEmail } from "react-icons/md";
+/* ----------------------------- Types ----------------------------- */
 
+type NavItem = { id: string; label: string };
 
-const navItems = [
+type SkillCategory = "frontend" | "backend" | "database" | "tools";
+
+type Skill = {
+  name: string;
+  Icon: IconType;
+  category: SkillCategory;
+};
+
+type Project = {
+  title: string;
+  description: string;
+  link: string;
+};
+
+type PremiumNavbarProps = {
+  activeSection: string;
+  onNavigate: (id: string) => void;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+/* ----------------------------- Data ------------------------------ */
+
+const navItems: NavItem[] = [
   { id: "top", label: "HOME" },
   { id: "about", label: "ABOUT ME" },
   { id: "projects", label: "PROJECTS" },
   { id: "skills", label: "SKILLS" },
-  { id: "contact", label: "LET'S WORK"}
+  { id: "contact", label: "LET'S WORK" },
 ];
 
-const skillsData = [
+const skillsData: Skill[] = [
   { name: "HTML", Icon: SiHtml5, category: "frontend" },
   { name: "CSS", Icon: SiCss3, category: "frontend" },
   { name: "JavaScript", Icon: SiJavascript, category: "frontend" },
@@ -46,7 +80,7 @@ const skillsData = [
   { name: "Bootstrap", Icon: SiBootstrap, category: "frontend" },
   { name: "TailwindCSS", Icon: SiTailwindcss, category: "frontend" },
 
-  { name: "Java", Icon: SiOpenjdk, category: "backend" }, // ✅ fixed
+  { name: "Java", Icon: SiOpenjdk, category: "backend" },
   { name: "Python", Icon: SiPython, category: "backend" },
 
   { name: "MongoDB", Icon: SiMongodb, category: "database" },
@@ -55,8 +89,7 @@ const skillsData = [
   { name: "GitHub", Icon: SiGithub, category: "tools" },
 ];
 
-
-const projects = [
+const projects: Project[] = [
   {
     title: "Project One",
     description: "A short description of what this project does.",
@@ -74,7 +107,14 @@ const projects = [
   },
 ];
 
-function PremiumNavbar({ activeSection, onNavigate, isOpen, setIsOpen }) {
+/* --------------------------- Components -------------------------- */
+
+function PremiumNavbar({
+  activeSection,
+  onNavigate,
+  isOpen,
+  setIsOpen,
+}: PremiumNavbarProps) {
   return (
     <>
       {/* Floating Glass Navbar (mobile fixed) */}
@@ -112,7 +152,7 @@ function PremiumNavbar({ activeSection, onNavigate, isOpen, setIsOpen }) {
                   MENU
                 </button>
 
-                {/* CONTACT – desktop only */}
+                {/* DOWNLOAD – desktop only */}
                 <a
                   href="/cv/Elyk-CV.pdf"
                   download
@@ -242,7 +282,13 @@ function PageAtmosphere() {
   );
 }
 
-function SectionHeader({ kicker, title, subtitle }) {
+type SectionHeaderProps = {
+  kicker?: string;
+  title: string;
+  subtitle?: string;
+};
+
+function SectionHeader({ kicker, title, subtitle }: SectionHeaderProps) {
   return (
     <div className="max-w-3xl">
       {kicker && (
@@ -265,12 +311,24 @@ function SectionHeader({ kicker, title, subtitle }) {
   );
 }
 
-function AnimatedSection({ id, className = "", children, containerRef }) {
-  const ref = useRef(null);
+type AnimatedSectionProps = {
+  id: string;
+  className?: string;
+  children: React.ReactNode;
+  containerRef: React.RefObject<HTMLElement | null>;
+};
+
+function AnimatedSection({
+  id,
+  className = "",
+  children,
+  containerRef,
+}: AnimatedSectionProps) {
+  const ref = useRef<HTMLElement | null>(null);
 
   const { scrollYProgress } = useScroll({
-    container: containerRef,
-    target: ref,
+    container: containerRef as React.RefObject<Element>,
+    target: ref as React.RefObject<Element>,
     offset: ["start 85%", "end 15%"],
   });
 
@@ -289,13 +347,11 @@ function AnimatedSection({ id, className = "", children, containerRef }) {
   );
 }
 
-
-
 function SkillsSection() {
-  const [filter, setFilter] = useState("all");
-  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<"all" | SkillCategory>("all");
+  const [query, setQuery] = useState<string>("");
 
-  const filters = [
+  const filters: Array<{ key: "all" | SkillCategory; label: string }> = [
     { key: "all", label: "All" },
     { key: "frontend", label: "Frontend" },
     { key: "backend", label: "Backend" },
@@ -406,15 +462,16 @@ function SkillsSection() {
   );
 }
 
-export default function Home() {
-  const scrollContainerRef = useRef(null);
-  const [activeSection, setActiveSection] = useState("top");
-  const [menuOpen, setMenuOpen] = useState(false);
+/* ------------------------------ Page ----------------------------- */
 
-  const scrollToSection = (id) => {
+export default function Home() {
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [activeSection, setActiveSection] = useState<string>("top");
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+
+  const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
-
 
   useEffect(() => {
     if (window.location.hash) {
@@ -434,7 +491,7 @@ export default function Home() {
 
     const sectionEls = navItems
       .map((n) => document.getElementById(n.id))
-      .filter(Boolean);
+      .filter((el): el is HTMLElement => Boolean(el));
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -460,6 +517,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 font-main">
+      <PageAtmosphere />
+
       <div
         ref={scrollContainerRef}
         className="h-screen overflow-y-scroll snap-y snap-proximity scroll-smooth bg-transparent"
@@ -670,8 +729,9 @@ export default function Home() {
 
                   <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
                     <div className="relative overflow-hidden rounded-2xl">
+                      {/* ✅ Use /... paths for files in /public */}
                       <img
-                        src="./MyPics/MyPic_1.jpg"
+                        src="/MyPics/MyPic_1.jpg"
                         alt="Kyle / Elyk portrait"
                         className="h-[360px] w-full object-cover"
                       />
@@ -699,7 +759,6 @@ export default function Home() {
           </AnimatedSection>
 
           {/* SKILLS */}
-          {/* SKILLS (cards + filters) */}
           <AnimatedSection id="skills" containerRef={scrollContainerRef}>
             <SkillsSection />
           </AnimatedSection>
@@ -881,4 +940,3 @@ export default function Home() {
     </main>
   );
 }
-
