@@ -8,6 +8,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <title>My Portfolio</title>
       <body>
         <div id="instant-splash" aria-hidden="true">
           <div className="splash-glow splash-glow-1" />
