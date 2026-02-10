@@ -1,11 +1,14 @@
 // app/layout.tsx
 import "./globals.css";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
-        {/* ✅ Instant Splash (server-rendered) */}
         <div id="instant-splash" aria-hidden="true">
           <div className="splash-glow splash-glow-1" />
           <div className="splash-glow splash-glow-2" />
