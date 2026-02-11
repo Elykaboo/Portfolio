@@ -791,9 +791,6 @@ export default function Home() {
 
                 {/* RIGHT — Profile card */}
                 <div className="relative flex items-center justify-center">
-                  {/* glow */}
-                  <div className="absolute -inset-6 -z-10 rounded-full bg-gradient-to-tr from-amber-500/20 via-orange-500/10 to-amber-400/20 blur-3xl" />
-
                   <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
                     <div className="relative overflow-hidden rounded-2xl">
                       <AboutCarousel

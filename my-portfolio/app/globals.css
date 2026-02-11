@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --font-main: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -41,7 +40,10 @@ body {
   font-family: var(--font-main);
 }
 
-/* ✅ Instant Splash Screen (no hydration delay) */
+/* =========================================
+   INSTANT SPLASH SCREEN
+========================================= */
+
 #instant-splash {
   position: fixed;
   inset: 0;
@@ -51,9 +53,8 @@ body {
   place-items: center;
   overflow: hidden;
 
-  /* visible immediately, then fade out after ~2s */
   animation: splashFadeOut 0.45s ease-out forwards;
-  animation-delay: 1.55s; /* 1.55 + 0.45 = 2.0s total */
+  animation-delay: 1.55s;
 }
 
 @keyframes splashFadeOut {
@@ -64,11 +65,15 @@ body {
   }
 }
 
+/* =========================
+   Glow (Amber Premium)
+========================= */
+
 .splash-glow {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(140px);
-  opacity: 0.18;
+  filter: blur(160px); /* softer spread */
+  opacity: 0.12; /* more subtle */
   transform: translateZ(0);
 }
 
@@ -77,7 +82,7 @@ body {
   height: 520px;
   top: -160px;
   left: 40px;
-  background: rgba(139, 92, 246, 1); /* violet-ish */
+  background: rgba(251, 191, 36, 1); /* amber-400 */
 }
 
 .splash-glow-2 {
@@ -85,14 +90,16 @@ body {
   height: 460px;
   top: 80px;
   right: 40px;
-  background: rgba(217, 70, 239, 1); /* fuchsia-ish */
+  background: rgba(245, 158, 11, 1); /* amber-500 */
 }
+
+/* =========================
+   Center Content
+========================= */
 
 .splash-center {
   position: relative;
   text-align: center;
-
-  /* little pop-in */
   animation: splashPopIn 0.6s ease-out both;
 }
 
@@ -139,6 +146,10 @@ body {
   color: rgba(255, 255, 255, 0.45);
 }
 
+/* =========================
+   Loading Bar (Amber)
+========================= */
+
 .splash-bar {
   margin: 22px auto 0;
   width: 160px;
@@ -152,7 +163,11 @@ body {
   height: 100%;
   width: 50%;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.7);
+  background: linear-gradient(
+    90deg,
+    rgba(251, 191, 36, 0.9),
+    rgba(245, 158, 11, 0.9)
+  );
   animation: splashBarMove 1.2s ease-in-out infinite;
 }
 
