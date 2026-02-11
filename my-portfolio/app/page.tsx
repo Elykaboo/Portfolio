@@ -436,6 +436,135 @@ function SkillsSection() {
   );
 }
 
+function AboutCarousel({
+  images,
+  altBase = "Kyle / Elyk portrait",
+}: {
+  images: Array<{ src: string; alt?: string }>;
+  altBase?: string;
+}) {
+  const [[index, direction], setIndex] = useState<[number, number]>([0, 0]);
+
+  const count = images.length;
+  const current = images[index];
+
+  const paginate = (dir: number) => {
+    setIndex(([i]) => {
+      const next = (i + dir + count) % count;
+      return [next, dir];
+    });
+  };
+
+  const goTo = (i: number) => {
+    if (i === index) return;
+    setIndex([i, i > index ? 1 : -1]);
+  };
+
+  const variants = {
+    enter: (dir: number) => ({
+      x: dir > 0 ? 40 : -40,
+      opacity: 0,
+      scale: 0.98,
+    }),
+    center: { x: 0, opacity: 1, scale: 1 },
+    exit: (dir: number) => ({
+      x: dir > 0 ? -40 : 40,
+      opacity: 0,
+      scale: 0.98,
+    }),
+  };
+
+  return (
+    <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+      {/* Image frame */}
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/30">
+        <div className="relative h-[360px] w-full">
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.img
+              key={current.src}
+              src={current.src}
+              alt={current.alt ?? `${altBase} ${index + 1}`}
+              className="absolute inset-0 h-full w-full object-cover"
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.28, ease: "easeOut" }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.12}
+              onDragEnd={(_, info) => {
+                const swipe = info.offset.x;
+                const velocity = info.velocity.x;
+
+                // swipe threshold (tuned for "premium" feel)
+                if (swipe < -60 || velocity < -450) paginate(1);
+                if (swipe > 60 || velocity > 450) paginate(-1);
+              }}
+            />
+          </AnimatePresence>
+        </div>
+
+        {/* Arrows */}
+        <button
+          type="button"
+          onClick={() => paginate(-1)}
+          className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/40 px-3 py-2 text-sm font-semibold text-white/90 backdrop-blur transition hover:bg-black/55"
+          aria-label="Previous photo"
+        >
+          ←
+        </button>
+
+        <button
+          type="button"
+          onClick={() => paginate(1)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/15 bg-black/40 px-3 py-2 text-sm font-semibold text-white/90 backdrop-blur transition hover:bg-black/55"
+          aria-label="Next photo"
+        >
+          →
+        </button>
+
+        {/* Dots */}
+        <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-2">
+          {images.map((_, i) => {
+            const active = i === index;
+            return (
+              <button
+                key={i}
+                type="button"
+                onClick={() => goTo(i)}
+                className={[
+                  "h-2 rounded-full transition",
+                  active
+                    ? "w-6 bg-amber-400"
+                    : "w-2 bg-white/35 hover:bg-white/55",
+                ].join(" ")}
+                aria-label={`Go to photo ${i + 1}`}
+              />
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Caption */}
+      <div className="mt-5 text-center">
+        <div className="text-sm font-semibold text-white/90">Kyle “Elyk”</div>
+        <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
+          Frontend Developer
+        </div>
+      </div>
+
+      <div className="mt-5 h-px w-full bg-white/10" />
+
+      <p className="mt-4 text-center text-sm text-white/60">
+        Focused on modern UI, motion, and building products that feel good to
+        use.
+      </p>
+    </div>
+  );
+}
+
 /** -----------------------------
  * Page
  * ------------------------------*/
@@ -667,10 +796,12 @@ export default function Home() {
 
                   <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
                     <div className="relative overflow-hidden rounded-2xl">
-                      <img
-                        src="/MyPics/mypic1.jpg" //fixed
-                        alt="Kyle / Elyk portrait"
-                        className="h-[360px] w-full object-cover"
+                      <AboutCarousel
+                        images={[
+                          { src: "/MyPics/mypic1.jpg", alt: "Portrait 1" },
+                          { src: "/MyPics/mypic2.jpg", alt: "Portrait 2" },
+                          { src: "/MyPics/mypic3.jpg", alt: "Portrait 3" },
+                        ]}
                       />
                     </div>
 
