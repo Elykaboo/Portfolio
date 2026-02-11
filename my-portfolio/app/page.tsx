@@ -121,7 +121,7 @@ function PremiumNavbar({
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="relative">
             <div className="pointer-events-none absolute inset-0 -z-10 hidden blur-2xl sm:block">
-              <div className="mx-auto h-14 w-[92%] rounded-full bg-gradient-to-r from-violet-500/15 via-fuchsia-500/10 to-indigo-500/15" />
+              <div className="mx-auto h-14 w-[92%] rounded-full bg-gradient-to-r from-amber-500/20 via-orange-500/12 to-amber-400/15" />
             </div>
 
             <div className="rounded-full border border-white/10 bg-zinc-950/50 backdrop-blur-xl">
@@ -147,20 +147,19 @@ function PremiumNavbar({
                   MENU
                 </button>
 
-                <a
-                  href="/cv/Elyk-CV.pdf"
-                  download
+                <button
+                  onClick={() => onNavigate("contact")}
                   className="ml-auto hidden inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white sm:inline-flex"
                 >
-                  <FaDownload size={14} />
-                  DOWNLOAD CV
-                </a>
+                  <MdEmail size={14} />
+                  CONTACT
+                </button>
               </div>
             </div>
 
             <div className="mt-3 hidden justify-center sm:flex">
               <div className="relative inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur">
-                <span className="h-1.5 w-1.5 rounded-full bg-violet-300/80" />
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
                 <span className="text-[10px] font-semibold uppercase tracking-[0.34em] text-white/60">
                   {navItems.find((n) => n.id === activeSection)?.label ??
                     "HOME"}
@@ -192,15 +191,16 @@ function PremiumNavbar({
                   CLOSE
                 </button>
 
-                <a
-                  href="/cv/Elyk-CV.pdf"
-                  download
-                  onClick={() => setIsOpen(false)}
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    onNavigate("contact");
+                  }}
                   className="ml-auto inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70 transition hover:bg-white/10 hover:text-white"
                 >
-                  <FaDownload size={14} />
-                  DOWNLOAD CV
-                </a>
+                  <MdEmail size={14} />
+                  CONTACT
+                </button>
               </div>
             </div>
 
@@ -240,7 +240,7 @@ function PremiumNavbar({
                       <span className="relative">
                         {item.label}
                         {isActive && (
-                          <span className="pointer-events-none absolute -inset-x-6 -inset-y-3 -z-10 rounded-2xl bg-gradient-to-r from-violet-500/15 via-fuchsia-500/10 to-indigo-500/15 blur-xl" />
+                          <span className="pointer-events-none absolute -inset-x-6 -inset-y-3 -z-10 rounded-2xl bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-amber-400/15 blur-xl" />
                         )}
                       </span>
                     </motion.button>
@@ -273,7 +273,7 @@ function SectionHeader({
     <div className="max-w-3xl">
       {kicker && (
         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
-          <span className="h-1.5 w-1.5 rounded-full bg-violet-300/80" />
+          <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
           {kicker}
         </div>
       )}
@@ -523,7 +523,7 @@ export default function Home() {
                     </span>{" "}
                     interfaces
                     <br className="hidden sm:block" /> with{" "}
-                    <span className="bg-gradient-to-r from-violet-200 to-fuchsia-200 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-amber-200 to-orange-200 bg-clip-text text-transparent">
                       smooth motion
                     </span>
                     .
@@ -663,11 +663,12 @@ export default function Home() {
                 {/* RIGHT — Profile card */}
                 <div className="relative flex items-center justify-center">
                   {/* glow */}
-                  <div className="absolute -inset-6 -z-10 rounded-full bg-gradient-to-tr from-violet-500/20 via-fuchsia-500/10 to-indigo-500/20 blur-3xl" />
+                  <div className="absolute -inset-6 -z-10 rounded-full bg-gradient-to-tr from-amber-500/20 via-orange-500/10 to-amber-400/20 blur-3xl" />
 
                   <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
                     <div className="relative overflow-hidden rounded-2xl">
-                      <img src="/MyPics/mypic1.jpg" //fixed
+                      <img
+                        src="/MyPics/mypic1.jpg" //fixed
                         alt="Kyle / Elyk portrait"
                         className="h-[360px] w-full object-cover"
                       />
@@ -781,7 +782,7 @@ export default function Home() {
                         name="name"
                         type="text"
                         placeholder="John Doe"
-                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/90 placeholder:text-white/30 outline-none transition focus:border-violet-300/50 focus:ring-2 focus:ring-violet-400/15"
+                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/90 placeholder:text-white/30 outline-none transition focus:border-amber-300/50 focus:ring-2 focus:ring-amber-400/15"
                         required
                       />
                     </div>
@@ -794,7 +795,7 @@ export default function Home() {
                         name="_replyto"
                         type="email"
                         placeholder="you@email.com"
-                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/90 placeholder:text-white/30 outline-none transition focus:border-fuchsia-300/50 focus:ring-2 focus:ring-fuchsia-400/15"
+                        className="w-full rounded-2xl border border-white/10 bg-zinc-950/40 px-4 py-3 text-sm text-white/90 placeholder:text-white/30 outline-none transition focus:border-amber-300/50 focus:ring-2 focus:ring-amber-400/15"
                         required
                       />
                     </div>
@@ -814,7 +815,7 @@ export default function Home() {
 
                     <button
                       type="submit"
-                      className="w-full rounded-2xl bg-gradient-to-r from-violet-400/80 to-fuchsia-400/80 px-6 py-3 text-sm font-semibold text-zinc-950 transition hover:opacity-95"
+                      className="w-full rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-3 text-sm font-semibold text-black transition hover:opacity-95"
                     >
                       Send Message
                     </button>
