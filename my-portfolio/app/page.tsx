@@ -667,7 +667,7 @@ export default function Home() {
 
                   <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
                     <div className="relative overflow-hidden rounded-2xl">
-                      <img src="./MyPics/MyPic_1.jpg"
+                      <img src="/MyPics/MyPic_1.jpg"
                         alt="Kyle / Elyk portrait"
                         className="h-[360px] w-full object-cover"
                       />
