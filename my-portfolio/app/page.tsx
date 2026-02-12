@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { ComponentType } from "react";
@@ -267,7 +268,7 @@ function SectionHeader({
 }: {
   kicker?: string;
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode; // ✅ was string
 }) {
   return (
     <div className="max-w-3xl">
