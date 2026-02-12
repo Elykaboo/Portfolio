@@ -419,7 +419,7 @@ function SkillsSection() {
 
               <div className="mt-4 text-sm text-white/60">
                 <span className="inline-flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-violet-300/80" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
                   Building with this now
                 </span>
               </div>
@@ -642,7 +642,7 @@ export default function Home() {
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
-                    <span className="h-1.5 w-1.5 rounded-full bg-violet-300/80" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
                     BUILDING MODERN WEB EXPERIENCES
                   </div>
 
@@ -761,7 +761,8 @@ export default function Home() {
                     , 21 — a developer focused on clean design, smooth motion,
                     and performance-driven web experiences. I enjoy turning
                     ideas into polished products and continuously refining my
-                    skills in Next.js, Prompt Engineering and modern frontend development.
+                    skills in Next.js, Prompt Engineering and modern frontend
+                    development.
                   </>
                 }
               />
