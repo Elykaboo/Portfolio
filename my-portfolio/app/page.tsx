@@ -28,7 +28,7 @@ import {
   SiOpenjdk,
 } from "react-icons/si";
 
-import { FaGithub, FaFacebook, FaInstagram, FaDownload } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 
@@ -976,27 +976,27 @@ export default function Home() {
                     {[
                       {
                         icon: <MdEmail size={20} />,
-                        label: "Email",
+                        label: "kyleyambaoliwanag@gmail.com",
                         href: "mailto:kyleyambaoliwanag@gmail.com",
                       },
                       {
                         icon: <FaGithub size={18} />,
-                        label: "GitHub",
+                        label: "elykaboo",
                         href: "https://github.com/elykaboo",
                       },
                       {
-                        icon: <FaFacebook size={18} />,
-                        label: "Facebook",
-                        href: "https://facebook.com/elykaborat",
+                        icon: <FaLinkedin size={18} />,
+                        label: "Kyle Adrian Liwanag",
+                        href: "https://www.linkedin.com/in/kyle-adrian-yambao-liwanag-b96371339/?skipRedirect=true",
                       },
                       {
                         icon: <FaXTwitter size={18} />,
-                        label: "X",
+                        label: "Kyleadrn",
                         href: "https://x.com/kyleadrn",
                       },
                       {
                         icon: <FaInstagram size={18} />,
-                        label: "Instagram",
+                        label: "Lykedrian",
                         href: "https://instagram.com/lykedrian",
                       },
                     ].map((s) => (
