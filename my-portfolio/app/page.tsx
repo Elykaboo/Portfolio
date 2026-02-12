@@ -348,7 +348,7 @@ function SkillsSection() {
       <SectionHeader
         kicker="TOOLKIT"
         title="Skills"
-        subtitle="Cards with real icons — filter by category or search."
+        subtitle="A curated stack I use to build fast, polished interfaces — search or filter to explore."
       />
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -551,7 +551,7 @@ function AboutCarousel({
       <div className="mt-5 text-center">
         <div className="text-sm font-semibold text-white/90">Kyle “Elyk”</div>
         <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
-          Frontend Developer
+          Fullstack Developer
         </div>
       </div>
 
@@ -659,8 +659,9 @@ export default function Home() {
                   </h1>
 
                   <p className="mt-4 text-base font-semibold text-white/70">
-                    I’m <span className="text-white">Elyk</span> — a developer
-                    focused on design, performance, and maintainable code.
+                    I’m <span className="text-white">Kyle Adrian Liwanag</span>{" "}
+                    — a developer focused on design, performance, and
+                    maintainable code.
                   </p>
 
                   <p className="mt-5 max-w-xl text-sm leading-6 text-zinc-300 sm:text-base">
@@ -751,7 +752,17 @@ export default function Home() {
               <SectionHeader
                 kicker="A QUICK INTRO"
                 title="About Me"
-                subtitle="A short section to explain what you’re learning, what you love building, and what kind of work you’re aiming for."
+                subtitle={
+                  <>
+                    <span className="font-semibold text-white">
+                      Kyle Adrian Liwanag
+                    </span>
+                    , 21 — a developer focused on clean design, smooth motion,
+                    and performance-driven web experiences. I enjoy turning
+                    ideas into polished products and continuously refining my
+                    skills in Next.js, Prompt Engineering and modern frontend development.
+                  </>
+                }
               />
 
               <div className="mt-12 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
@@ -807,7 +818,7 @@ export default function Home() {
                         Kyle “Elyk”
                       </div>
                       <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
-                        Frontend Developer
+                        Fullstack Developer
                       </div>
                     </div>
 
@@ -832,7 +843,7 @@ export default function Home() {
               <SectionHeader
                 kicker="SELECTED WORK"
                 title="Projects"
-                subtitle="A few things I’ve built while learning. Swap these with real projects as you ship more."
+                subtitle="A few things I’ve built while learning."
               />
 
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
